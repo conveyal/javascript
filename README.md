@@ -32,7 +32,33 @@ On Mac's, a build may open thousands of files at once and hit the machine's max 
 * Don't recreate the wheel! Use other components as much as possible.
 * Split out a component into it's own repo if it can be used across projects.
 * Build with the `--dev` flag to get source maps to help with debugging.
-* For smaller projects, use just one `component.json` file. For larger ones use an entry `component.json` file and individual components. (See [Modeify](https://github.com/conveyal/modeify) for an example)
+
+### Project Setup
+
+For smaller projects, use just one `component.json` file. For larger ones use an entry `component.json` file and individual components. (See [Modeify](https://github.com/conveyal/modeify) for an example)
+
+The `component.json` would look like:
+
+```json
+{
+  "paths": [
+    "client"
+  ],
+  "local": [
+    "entry-component"
+  ]
+}
+```
+
+`paths` define folders, `client` in this case, in which to look for components. `local` defines components to be accessible from the root level. To use in an application `entry-component` will need to be required in your `index.html`.
+
+```html
+  <srcipt src="build/build.js"></script>
+  <script>require('entry-component');</script>
+</body>
+```
+
+Components within your application can access each other by defining their own `local` fields in their `component.json`.
 
 ## [JSHint](https://jshint.com)
 
