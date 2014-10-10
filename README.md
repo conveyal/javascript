@@ -4,7 +4,7 @@ Tools & best practices for writing JavaScript across Conveyal projects.
 
 ## [Node.js](http://nodejs.org)
 
-Completely necessary for modern JavaScript development. May need to install `npm` separately depending on your OS. Installation instructions are [here](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager).
+Completely necessary for modern JavaScript development. May need to install `npm` separately depending on your OS. On Ubuntu, install the `nodejs-legacy` and `npm` packages. Installation instructions for other platforms are [here](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager).
 
 ### [N](https://github.com/visionmedia/n)
 
