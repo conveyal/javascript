@@ -42,6 +42,12 @@ JSHint prevents a lot of headaches that appear in JavaScript development. Always
 $ npm install -g jshint
 ```
 
+Run it against your JavaScript on every file change.
+
+```bash
+$ jshint index.js
+```
+
 Copy the `jshint.json` file in this repo to `~/.jshintrc` or to the base folder of your Conveyal projects so that we will not need to recreate one for each project.
 
 Our current rules are:
@@ -68,10 +74,16 @@ Our current rules are:
 
 ## [JSBeautify](https://github.com/beautify-web/js-beautify)
 
-Consolidate styling rules. Should be used before every check in of JavaScript changes.
+Consolidate styling rules.
 
 ```bash
 $ npm install -g js-beautify
+```
+
+Run it on your `.js` files before checking in changes.
+
+```bash
+$ js-beautify index.js --replace
 ```
 
 Copy the `jsbeautify.json` file in this repo to `~/.jsbeautifyrc` or to the base folder of your Conveyal projects so that we will not need to recreate one for each project.
