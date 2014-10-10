@@ -136,3 +136,7 @@ Our current rules are:
   "wrap_line_length": 120
 }
 ```
+
+## [Atom.io](https://atom.io)
+
+If you don't already have a preferred text editor, [install Atom](https://github.com/atom/atom/blob/master/README.md#installing). It's free, in active development, has thousands of plug-ins, and is easily hackable.
