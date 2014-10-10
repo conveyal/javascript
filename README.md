@@ -74,7 +74,7 @@ Run it against your JavaScript on every file change.
 $ jshint index.js
 ```
 
-Copy the `jshint.json` file in this repo to `~/.jshintrc` or to the base folder of your Conveyal projects so that we will not need to recreate one for each project.
+Symlink the `jshint.json` file in this repo to `~/.jshintrc` or to the base folder of your Conveyal projects so that we will not need to recreate one for each project.
 
 Our current rules are:
 
@@ -112,7 +112,7 @@ Run it on your `.js` files before checking in changes.
 $ js-beautify index.js --replace
 ```
 
-Copy the `jsbeautify.json` file in this repo to `~/.jsbeautifyrc` or to the base folder of your Conveyal projects so that we will not need to recreate one for each project.
+Symlink the `jsbeautify.json` file in this repo to `~/.jsbeautifyrc` or to the base folder of your Conveyal projects so that we will not need to recreate one for each project.
 
 Our current rules are:
 
