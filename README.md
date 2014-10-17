@@ -60,6 +60,10 @@ The `component.json` would look like:
 
 Components within your application can access each other by defining their own `local` fields in their `component.json`.
 
+### Taxonomy
+
+If you're using a client-side MVC framework, each view, model, etc. should generally be in its own component (except for tiny things, for example trivial item views for collections or models that are used to marshal data within a component). They should be named `whatever-view`, `whatever-model`, `whatever-collection`, `whatever-collection-view`, `whatever-item-view` (for views that are intended for use in collections exclusively, for instance table rows or list items. The view should be the only thing in module.exports. (i.e. `model.exports = Backbone.Model.extend . . .`).
+
 ## [JSHint](https://jshint.com)
 
 JSHint prevents a lot of headaches that appear in JavaScript development. Always **always** setup JSHint as part of your build process.
