@@ -17,7 +17,7 @@ $ n stable
 
 ## [Component](https://github.com/componentjs/guide)
 
-Dependency managment & build system. For all new projects use `1.x`, Modeify currently uses `0.19.x` but will be upgrading soon. Read the [guide](https://github.com/componentjs/guide) to get familiar with the toolset.
+Dependency managment & build system. For all new projects use `1.x`. Read the [guide](https://github.com/componentjs/guide) to get familiar with the toolset.
 
 ```bash
 $ npm install -g component
