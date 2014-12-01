@@ -60,6 +60,14 @@ The `component.json` would look like:
 
 Components within your application can access each other by defining their own `local` fields in their `component.json`.
 
+## [Polyfills](https://polyfills.io)
+
+Always embed this script above client side JavaScript to automatically include the necessary `ES5`/`ES6` polyfills based on the browser's `UserAgent`. This allows us to assume that all browsers are up to the latest `ES6` standards.
+
+```html
+  <script src="https://cdn.jsdelivr.net/polyfills/polyfill.js"></script>
+```
+
 ## [JSHint](https://jshint.com)
 
 JSHint prevents a lot of headaches that appear in JavaScript development. Always **always** setup JSHint as part of your build process.
