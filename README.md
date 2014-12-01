@@ -60,12 +60,16 @@ The `component.json` would look like:
 
 Components within your application can access each other by defining their own `local` fields in their `component.json`.
 
+### Taxonomy
+
+If you're using a client-side MVC framework, each view, model, etc. should generally be in its own component (except for tiny things, for example trivial item views for collections or models that are used to marshal data within a component). They should be named `whatever-view`, `whatever-model`, `whatever-collection`, `whatever-collection-view`, `whatever-item-view` (for views that are intended for use in collections exclusively, for instance table rows or list items. The view should be the only thing in module.exports. (i.e. `model.exports = Backbone.Model.extend . . .`).
+
 ## [Polyfills](https://polyfills.io)
 
 Always embed this script above client side JavaScript to automatically include the necessary `ES5`/`ES6` polyfills based on the browser's `UserAgent`. This allows us to assume that all browsers are up to the latest `ES6` standards.
 
 ```html
-  <script src="https://cdn.jsdelivr.net/polyfills/polyfill.js"></script>
+<script src="https://cdn.jsdelivr.net/polyfills/polyfill.js"></script>
 ```
 
 ## [JSHint](https://jshint.com)
