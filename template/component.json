@@ -1,0 +1,13 @@
+{
+  "name": "project",
+  "main": "lib/index.js",
+  "scripts": [
+    "lib/index.js"
+  ],
+  "styles": [
+    "lib/style.css"
+  ],
+  "templates": [
+    "lib/template.html"
+  ]
+}

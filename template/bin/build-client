@@ -1,0 +1,167 @@
+#!/usr/bin/env node
+
+var build = require('component-builder');
+var resolve = require('component-resolver');
+var commander = require('commander');
+var fs = require('fs');
+var htmlMinifier = require('html-minifier').minify;
+var marked = require('marked');
+var mkdir = require('mkdirp');
+var myth = require('myth');
+var path = require('path');
+var sqwish = require('sqwish');
+var uglify = require('uglify-js');
+var yml2js = require('js-yaml').load;
+
+// Commander
+
+commander
+  .option('-b, --bundle <component>',
+    'For applications. Defaults to building off of the root component.json',
+    'component.json')
+  .option('-c, --config <config>', 'JSON or YAML config file')
+  .option('-e, --env <environment>', 'Environment', 'development')
+  .option('-o, --out <directory>', 'Output directory defaulting to ./build',
+    'build')
+  .option('-r, --root <directory>', 'Defaults to cwd', path.resolve, process.cwd())
+  .parse(process.argv);
+
+// Environent
+
+var env = commander.env;
+
+// Load the JSON/YAML config
+
+var config = {};
+
+if (commander.config) {
+  var configPath = commander.root + '/' + commander.config;
+  switch (path.extname(commander.config)) {
+    case 'json':
+    case 'js':
+      config = require(configPath);
+      break;
+    case 'yml':
+    case 'yaml':
+      config = yml2js(fs.readFileSync(configPath, 'utf8'));
+      break;
+  }
+}
+
+// Set the rest of the public config.
+
+config.env = env;
+
+// If there is an `environments` object, override the default config values
+
+if (config.environments && config.environments[env])
+  for (var key in config.environments[env])
+    config[key] = config.environments[env][key] || config[key] || '';
+
+// remove unused data
+
+delete config.environments;
+
+// Create the config string
+
+var configString = 'window.CONFIG=' + JSON.stringify(config, null, '  ') +
+  ';\n';
+
+// HTML Minifier Options
+
+var htmlMinifierOptions = {
+  collapseWhitespace: true,
+  collapseBooleanAttributes: true,
+  removeEmptyAttributes: true,
+  removeOptionalTags: true
+};
+
+// Build settings.
+
+var dest = commander.root + '/' + commander.out;
+var development = env !== 'production';
+
+// mkdirp
+
+mkdir.sync(dest);
+
+// Build.
+
+resolve(require(commander.root + '/' + commander.bundle), {
+  development: development,
+  install: true,
+  out: 'components',
+  root: commander.root,
+  verbose: true
+}, function(err, tree) {
+  if (err) throw err;
+
+  build
+    .scripts(tree, {
+      alias: true,
+      sourceMap: development,
+      sourceUrl: development
+    })
+    .use('json', build.plugins.json())
+    .use('scripts', build.plugins.js())
+    .use('templates', templates({
+      development: development
+    }))
+    .end(function(err, str) {
+      if (err) throw err;
+      if (!str) return;
+
+      var js = configString + build.scripts.require + '\n' + str +
+        ';\nrequire("' + build.scripts.canonical(tree).canonical +
+        '");\n';
+
+      if (!development) {
+        js = uglify.minify(js, {
+          fromString: true
+        }).code;
+      }
+
+      fs.writeFileSync(dest + '/build.js', js);
+    });
+
+  build
+    .styles(tree)
+    .use('styles', build.plugins.css())
+    .end(function(err, str) {
+      if (err) throw err;
+      if (!str) return;
+
+      var css = myth(str);
+      css = css.replace(/\burl *\(([^)]+)\)/g, rewrite);
+
+      if (!development) css = sqwish.minify(css);
+      fs.writeFileSync(dest + '/build.css', css);
+    });
+});
+
+function rewrite(_, url) {
+  var orig = 'url("' + url + '")';
+  if (isData(url)) return orig;
+  return 'url("' + config.static_url + url + '")';
+}
+
+function isData(url) {
+  return url.indexOf('data:') === 0;
+}
+
+function templates(options) {
+  return function(file, done) {
+    file.read(function(err, string) {
+      if (err) return done(err);
+      if (!string) return done();
+
+      if (file.extension === 'md') string = marked(string);
+      if (!options.development) string = htmlMinifier(string,
+        htmlMinifierOptions);
+
+      file.string = JSON.stringify(string);
+      file.define = true;
+      done();
+    });
+  };
+}

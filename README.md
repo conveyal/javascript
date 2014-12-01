@@ -50,7 +50,7 @@ The `component.json` would look like:
 }
 ```
 
-`paths` define folders, `client` in this case, in which to look for components. `local` defines components to be accessible from the root level. To use in an application `entry-component` will need to be required in your `index.html`.
+`paths` define folders, `client` in this case, in which to look for components. `local` defines components to be accessible from the root level. To use in an application `entry-component` will need to be required in your `index.html`. If you use the included build script, it will be required automatically.
 
 ```html
   <srcipt src="build/build.js"></script>
@@ -64,11 +64,9 @@ Components within your application can access each other by defining their own `
 
 If you're using a client-side MVC framework, each view, model, etc. should generally be in its own component (except for tiny things, for example trivial item views for collections or models that are used to marshal data within a component). They should be named `whatever-view`, `whatever-model`, `whatever-collection`, `whatever-collection-view`, `whatever-item-view` (for views that are intended for use in collections exclusively, for instance table rows or list items. The view should be the only thing in module.exports. (i.e. `model.exports = Backbone.Model.extend . . .`).
 
-## ES6
+### Building
 
-### [Modules](http://www.2ality.com/2014/09/es6-modules-final.html)
-
-Use `import`/`export` syntax and a [`transpiler`](https://github.com/componentjs/builder-es6-module-to-cjs) in the build step to utilize the standardized `ES6` module syntax. See the `package.json` and `build.js` for more info.
+Use the included build script in `bin/build` for applications. The default `component build` is enough for small libraries, but the included build script adds additional functionality that is common across projects like minification and automatic markdown conversion.
 
 ### [Polyfills](https://polyfills.io)
 
