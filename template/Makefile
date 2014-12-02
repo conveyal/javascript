@@ -20,7 +20,7 @@ components: $(JSON)
 	@component install --dev
 
 install: node_modules
-	@npm install -g component js-beautify jshint
+	@npm install -g component js-beautify jshint serve
 
 lint: $(JS)
 	@jshint $(JS)

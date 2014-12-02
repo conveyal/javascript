@@ -13,44 +13,34 @@ var sqwish = require('sqwish');
 var uglify = require('uglify-js');
 var yml2js = require('js-yaml').load;
 
-// Commander
-
 commander
-  .option('-b, --bundle <component>',
-    'For applications. Defaults to building off of the root component.json',
-    'component.json')
-  .option('-c, --config <config>', 'JSON or YAML config file')
+  .option('-b, --bundle <component>', 'Defaults to building off of the root component.json', path.resolve, 'component.json')
+  .option('-c, --config <config>', 'JSON or YAML config file', path.resolve)
   .option('-e, --env <environment>', 'Environment', 'development')
-  .option('-o, --out <directory>', 'Output directory defaulting to ./build',
-    'build')
+  .option('-o, --out <directory>', 'Output directory defaulting to ./build', path.resolve, 'build')
   .option('-r, --root <directory>', 'Defaults to cwd', path.resolve, process.cwd())
   .parse(process.argv);
-
-// Environent
-
-var env = commander.env;
 
 // Load the JSON/YAML config
 
 var config = {};
 
 if (commander.config) {
-  var configPath = commander.root + '/' + commander.config;
   switch (path.extname(commander.config)) {
     case 'json':
     case 'js':
-      config = require(configPath);
+      config = require(commander.config);
       break;
     case 'yml':
     case 'yaml':
-      config = yml2js(fs.readFileSync(configPath, 'utf8'));
+      config = yml2js(fs.readFileSync(commander.config, 'utf8'));
       break;
   }
 }
 
 // Set the rest of the public config.
 
-config.env = env;
+var env = config.env = commander.env;
 
 // If there is an `environments` object, override the default config values
 
@@ -64,11 +54,8 @@ delete config.environments;
 
 // Create the config string
 
-var configString = 'window.CONFIG=' + JSON.stringify(config, null, '  ') +
-  ';\n';
-
-// HTML Minifier Options
-
+var configString = 'window.CONFIG=' + JSON.stringify(config, null, '  ') + ';\n';
+var development = env !== 'production';
 var htmlMinifierOptions = {
   collapseWhitespace: true,
   collapseBooleanAttributes: true,
@@ -76,18 +63,13 @@ var htmlMinifierOptions = {
   removeOptionalTags: true
 };
 
-// Build settings.
-
-var dest = commander.root + '/' + commander.out;
-var development = env !== 'production';
-
 // mkdirp
 
-mkdir.sync(dest);
+mkdir.sync(commander.out);
 
 // Build.
 
-resolve(require(commander.root + '/' + commander.bundle), {
+resolve(require(commander.bundle), {
   development: development,
   install: true,
   out: 'components',
@@ -96,6 +78,13 @@ resolve(require(commander.root + '/' + commander.bundle), {
 }, function(err, tree) {
   if (err) throw err;
 
+  scripts(tree, development);
+  styles(tree, development);
+});
+
+// Build scripts
+
+function scripts(tree, development) {
   build
     .scripts(tree, {
       alias: true,
@@ -121,9 +110,13 @@ resolve(require(commander.root + '/' + commander.bundle), {
         }).code;
       }
 
-      fs.writeFileSync(dest + '/build.js', js);
+      fs.writeFileSync(commander.out + '/build.js', js);
     });
+}
 
+// Builds styles
+
+function styles(tree, development) {
   build
     .styles(tree)
     .use('styles', build.plugins.css())
@@ -135,9 +128,9 @@ resolve(require(commander.root + '/' + commander.bundle), {
       css = css.replace(/\burl *\(([^)]+)\)/g, rewrite);
 
       if (!development) css = sqwish.minify(css);
-      fs.writeFileSync(dest + '/build.css', css);
+      fs.writeFileSync(commander.out + '/build.css', css);
     });
-});
+}
 
 function rewrite(_, url) {
   var orig = 'url("' + url + '")';
@@ -156,8 +149,7 @@ function templates(options) {
       if (!string) return done();
 
       if (file.extension === 'md') string = marked(string);
-      if (!options.development) string = htmlMinifier(string,
-        htmlMinifierOptions);
+      if (!options.development) string = htmlMinifier(string, htmlMinifierOptions);
 
       file.string = JSON.stringify(string);
       file.define = true;
