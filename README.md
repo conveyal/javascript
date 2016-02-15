@@ -18,10 +18,24 @@ Standard can lint and format your code. No need for custom configuration files.
 $ npm install -g standard
 ```
 
+Add the `babel-eslint` parser to your project's `devDependencies` and add the following to your `package.json`
+
+```json
+  "standard": {
+    "parser": "babel-eslint"
+  }
+```
+
+
 All checked in code should pass the latest `standard` linting.
 
 ```bash
 $ standard
+```
+
+To format, run:
+
+```bash
 $ standard --format
 ```
 
