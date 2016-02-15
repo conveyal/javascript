@@ -10,6 +10,24 @@ Certain conventions should be followed due to the new functionality that ES6 bri
 * Use Arrow Functions (`=>`) in place of function expressions when possible.
 * Use `Promise`s instead of the `function asyncFunc (input, function callback (err, result) {}) {}` style.
 
+## Other Tips
+
+#### Dont use `bind`
+
+Do:
+
+```jsx
+onClick={e => this.handleEvent(e)}
+```
+
+Don't
+
+```jsx
+onClick={this.handleEvent.bind(this)}
+```
+
+####
+
 ## [Using Standard Style](http://standardjs.com)
 
 Standard can lint and format your code. No need for custom configuration files.
