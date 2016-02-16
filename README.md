@@ -12,7 +12,7 @@ Certain conventions should be followed due to the new functionality that ES6 bri
 
 ## Other Tips
 
-#### Dont use `bind`
+#### Don't use `bind`
 
 Do:
 
@@ -24,6 +24,20 @@ Don't
 
 ```jsx
 onClick={this.handleEvent.bind(this)}
+```
+
+#### Don't use `jQuery`
+
+To start, see: [http://youmightnotneedjquery.com/](http://youmightnotneedjquery.com/). Use ES6 and smaller modern JavaScript libraries instead of using jQuery.
+
+Use [`fetch`](https://github.com/github/fetch) instead of `$.ajax`/`$.get`/`$.post`:
+
+```js
+fetch(url)
+  .then(res => res.json())
+  .then(data => {
+    console.log(data)
+  })
 ```
 
 ####
