@@ -12,7 +12,9 @@ Certain conventions should be followed due to the new functionality that ES6 bri
 
 ## Other Tips
 
-#### Don't use `bind`
+#### 1. Use `Promises` when you can and [watch out for callback hell](http://callbackhell.com/)
+
+#### 2. Don't use `bind`
 
 Do:
 
@@ -26,7 +28,7 @@ Don't
 onClick={this.handleEvent.bind(this)}
 ```
 
-#### Don't use `jQuery`
+#### 3. Don't use `jQuery`
 
 To start, see: [http://youmightnotneedjquery.com/](http://youmightnotneedjquery.com/). Use ES6 and smaller modern JavaScript libraries instead of using jQuery.
 
