@@ -12,7 +12,23 @@ Certain conventions should be followed due to the new functionality that ES6 bri
 
 ## Other Tips
 
-#### 1. Use `Promises` when you can and [watch out for callback hell](http://callbackhell.com/)
+#### 1. Use `Promises`, [`async`/`await`](http://tc39.github.io/ecmascript-asyncawait/) and [watch out for callback hell](http://callbackhell.com/)
+
+Promiseified functions can be `awaited` allowing for this style of functions:
+
+```js
+async function chainAnimationsAsync(elem, animations) {
+  let ret = null
+  try {
+    for(const anim of animations) {
+      ret = await anim(elem)
+    }
+  } catch (e) {
+    /* ignore and keep going */
+  }
+  return ret
+}
+```
 
 #### 2. Don't use `bind`
 
@@ -26,6 +42,16 @@ Don't
 
 ```jsx
 onClick={this.handleEvent.bind(this)}
+```
+
+In classes you can auto-bind to the instance by using class properties and arrow functions.
+
+```js
+class Foo {
+  handleEvent = (e) => {
+    // inside this function `this` will always be the instance of `Foo`
+  }
+}
 ```
 
 #### 3. Don't use `jQuery`
