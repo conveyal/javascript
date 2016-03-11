@@ -12,7 +12,7 @@ Certain conventions should be followed due to the new functionality that ES6 bri
 
 ## Other Tips
 
-#### 1. Use `Promises`, [`async`/`await`](http://tc39.github.io/ecmascript-asyncawait/) and [watch out for callback hell](http://callbackhell.com/)
+#### Use `Promises`, [`async`/`await`](http://tc39.github.io/ecmascript-asyncawait/) and [watch out for callback hell](http://callbackhell.com/)
 
 Promiseified functions can be `awaited` allowing for this style of functions:
 
@@ -30,7 +30,19 @@ async function chainAnimationsAsync(elem, animations) {
 }
 ```
 
-#### 2. Don't use `bind`
+#### Always use [`debug`](https://github.com/visionmedia/debug) instead of `console.log`
+
+Debug is a tiny library that allows you to selectively turn on and off namespaced log statements in the browser and in node.
+
+```js
+import dbg from 'debug'
+const debug = dbg('library:module')
+debug('log this!')
+```
+
+The log will only be shown in the browser when you turn on `localStorage.setItem('debug', 'libr')`.
+
+#### Don't use `bind`
 
 Do:
 
@@ -54,7 +66,7 @@ class Foo {
 }
 ```
 
-#### 3. Don't use `jQuery`
+#### Don't use `jQuery`
 
 To start, see: [http://youmightnotneedjquery.com/](http://youmightnotneedjquery.com/). Use ES6 and smaller modern JavaScript libraries instead of using jQuery.
 
@@ -67,8 +79,6 @@ fetch(url)
     console.log(data)
   })
 ```
-
-####
 
 ## [Using Standard Style](http://standardjs.com)
 
