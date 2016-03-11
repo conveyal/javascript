@@ -40,7 +40,11 @@ const debug = dbg('library:module')
 debug('log this!')
 ```
 
-The log will only be shown in the browser when you turn on `localStorage.setItem('debug', 'libr')`.
+The log will only be shown in the browser when you turn it on via simple regexp in the console:
+
+```js
+> localStorage.setItem('debug', 'library*')
+```
 
 #### Don't use `bind`
 
