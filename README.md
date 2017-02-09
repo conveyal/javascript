@@ -2,6 +2,31 @@
 
 Tools & best practices for writing JavaScript across Conveyal projects.
 
+## [Node.js](http://nodejs.org)
+
+Completely necessary for modern JavaScript development. Install with a [package manager.](https://nodejs.org/en/download/package-manager/) **YOU MUST** use a `6.x.x` version for Conveyal development.
+
+```bash
+$ brew install node
+```
+
+### [Yarn](https://yarnpkg.com/en/)
+
+Use `yarn` as an `npm` replacement to manage dependencies.
+
+```bash
+$ brew install yarn
+```
+
+### [N](https://github.com/visionmedia/n)
+
+Use `n` to manage Node.js versions.
+
+```bash
+$ yarn global add n
+$ n latest
+```
+
 ## [ES6](https://github.com/DrkSephy/es6-cheatsheet)
 
 Certain conventions should be followed due to the new functionality that ES6 brings. Highlights:
@@ -24,7 +49,7 @@ async function chainAnimationsAsync(elem, animations) {
       ret = await anim(elem)
     }
   } catch (e) {
-    /* ignore and keep going */
+    /* report and keep going */
   }
   return ret
 }
@@ -51,7 +76,7 @@ The log will only be shown in the browser when you turn it on via simple regexp 
 Do:
 
 ```jsx
-onClick={e => this.handleEvent(e)}
+onClick={(e) => this.handleEvent(e)}
 ```
 
 Don't
@@ -120,19 +145,6 @@ See the styling rules [here](http://standardjs.com/rules.html#javascript-standar
 If you don't already have a preferred text editor, [install Atom](https://github.com/atom/atom/blob/master/README.md#installing). It's free, in active development, has thousands of plug-ins, and is easily hackable.
 
 Install the [standard style linter](https://atom.io/packages/linter-js-standard) to see errors and lint on saves.
-
-## [Node.js](http://nodejs.org)
-
-Completely necessary for modern JavaScript development. May need to install `npm` separately depending on your OS. On Ubuntu, install the `nodejs-legacy` and `npm` packages. Installation instructions for other platforms are [here](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager).
-
-### [N](https://github.com/visionmedia/n)
-
-Use `n` to manage Node.js versions. Use the latest `5.x.x` version.
-
-```bash
-$ npm install -g n
-$ n latest
-```
 
 ### Taxonomy
 
