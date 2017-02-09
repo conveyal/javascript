@@ -7,7 +7,7 @@ Tools & best practices for writing JavaScript across Conveyal projects.
 Completely necessary for modern JavaScript development. Install with a [package manager.](https://nodejs.org/en/download/package-manager/) **YOU MUST** use a `6.x.x` version for Conveyal development.
 
 ```bash
-$ brew install node
+$ brew install node@6
 ```
 
 ### [Yarn](https://yarnpkg.com/en/)
