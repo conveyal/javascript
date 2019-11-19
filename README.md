@@ -7,7 +7,7 @@ Tools & best practices for writing JavaScript across Conveyal projects.
 Completely necessary for modern JavaScript development. Install with a [package manager.](https://nodejs.org/en/download/package-manager/) **YOU MUST** use a `6.x.x` version for Conveyal development.
 
 ```bash
-$ brew install node@6
+$ brew install node@10
 ```
 
 ### [Yarn](https://yarnpkg.com/en/)
@@ -108,44 +108,3 @@ fetch(url)
     console.log(data)
   })
 ```
-
-## [Using Standard Style](http://standardjs.com)
-
-Standard can lint and format your code. No need for custom configuration files.
-
-```bash
-$ npm install -g standard
-```
-
-Add the `babel-eslint` parser to your project's `devDependencies` and add the following to your `package.json`
-
-```json
-  "standard": {
-    "parser": "babel-eslint"
-  }
-```
-
-
-All checked in code should pass the latest `standard` linting.
-
-```bash
-$ standard
-```
-
-To format, run:
-
-```bash
-$ standard --format
-```
-
-See the styling rules [here](http://standardjs.com/rules.html#javascript-standard-style).
-
-## [Atom.io](https://atom.io)
-
-If you don't already have a preferred text editor, [install Atom](https://github.com/atom/atom/blob/master/README.md#installing). It's free, in active development, has thousands of plug-ins, and is easily hackable.
-
-Install the [standard style linter](https://atom.io/packages/linter-js-standard) to see errors and lint on saves.
-
-### Taxonomy
-
-If you're using a client-side MVC framework, each view, model, etc. should generally be in its own component (except for tiny things, for example trivial item views for collections or models that are used to marshal data within a component). They should be named `whatever-view`, `whatever-model`, `whatever-collection`, `whatever-collection-view`, `whatever-item-view` (for views that are intended for use in collections exclusively, for instance table rows or list items. The view should be the only thing in module.exports. (i.e. `model.exports = Backbone.Model.extend . . .`).
